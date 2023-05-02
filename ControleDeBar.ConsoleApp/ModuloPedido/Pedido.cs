@@ -6,15 +6,17 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
 {
     public class Pedido : EntidadeBase
     {
-        public int quantidadeDoProduto;
-        public int totalParcial;
+        public decimal quantidade;
+        public decimal totalParcial;
         public Produto produto;
 
-        public Pedido(Produto produto, int quantidadeProduto)
+        public Pedido(Produto produto, decimal quantidade, decimal totalParcial)
         {           
 
             this.produto = produto;
-            this.quantidadeDoProduto = quantidadeProduto;
+            this.quantidade = quantidade;
+            this.totalParcial = totalParcial;
+
         }
 
         public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
@@ -22,7 +24,7 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
             Pedido pedidoAtualizado = (Pedido) registroAtualizado;
 
             this.produto = pedidoAtualizado.produto;
-            this.quantidadeDoProduto = pedidoAtualizado.quantidadeDoProduto;
+            this.quantidade = pedidoAtualizado.quantidade;
             this.totalParcial = pedidoAtualizado.totalParcial;
         }
 
@@ -33,7 +35,7 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
             if (produto == null)
                 erros.Add("O campo \"produto\" é obrigatório");
 
-            if (quantidadeDoProduto <= 0)
+            if (quantidade <= 0)
                 erros.Add("O campo \"quantidade\" não pode ser menor que 0");
 
             if (totalParcial < 0)

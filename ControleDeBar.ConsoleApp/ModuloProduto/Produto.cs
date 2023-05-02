@@ -8,9 +8,9 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
     public class Produto : EntidadeBase
     {
         public string produto_nome;
-        public int precoProduto;
+        public decimal precoProduto;
 
-        public Produto(string produto, int precoProduto)
+        public Produto(string produto, decimal precoProduto)
         {
             this.produto_nome = produto;
             this.precoProduto = precoProduto;

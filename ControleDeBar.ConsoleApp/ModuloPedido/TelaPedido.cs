@@ -22,13 +22,13 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
 
         protected override void MostrarTabela(ArrayList registros)
         {
-            Console.WriteLine("{0, -10} | {1, -20} | {2, -20} | {3, -20}", "Id", "Produto","Quantidade", "Valor do Pedido");
+            Console.WriteLine("{0, -10} | {1, -20} | {2, -20} | {3, -30}", "Id", "Produto","Quantidade", "Valor do Pedido");
 
             Console.WriteLine("--------------------------------------------------------------------");
 
             foreach (Pedido pedido in registros)
             {
-                Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", pedido.id, pedido.produto.produto_nome, pedido.quantidadeDoProduto, pedido.totalParcial);
+                Console.WriteLine("{0, -10} | {1, -20} | {2, -20} | {3, -30}", pedido.id, pedido.produto.produto_nome, pedido.quantidade, pedido.totalParcial);
             }
         }
 
@@ -43,9 +43,11 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
             Produto produto = repositorioProduto.SelecionarPorId(idProduto);
 
             Console.Write("Digite a quantidade do Produto: ");
-            int quantidadeDoProduto = Convert.ToInt32(Console.ReadLine());
+            decimal quantidade = Convert.ToInt32(Console.ReadLine());
 
-            return new Pedido(produto, quantidadeDoProduto);
+            decimal totalParcial = produto.precoProduto * quantidade;
+
+            return new Pedido(produto, quantidade, totalParcial);
         }
 
         private Produto ObterProduto()
