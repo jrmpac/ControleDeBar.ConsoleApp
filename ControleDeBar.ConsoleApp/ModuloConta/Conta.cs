@@ -1,5 +1,4 @@
-﻿
-using ControleDeBar.ConsoleApp.Compartilhado;
+﻿using ControleDeBar.ConsoleApp.Compartilhado;
 using System.Collections;
 
 namespace ControleDeBar.ConsoleApp.ModuloConta
@@ -12,7 +11,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         }
 
         public override ArrayList Validar()
-        {
+    {
             throw new NotImplementedException();
         }
     }
