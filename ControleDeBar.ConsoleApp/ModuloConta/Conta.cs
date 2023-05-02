@@ -12,7 +12,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         }
 
         public override ArrayList Validar()
-        {
+    {
             throw new NotImplementedException();
         }
     }
