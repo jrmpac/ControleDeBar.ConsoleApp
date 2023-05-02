@@ -11,7 +11,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         }
 
         protected override EntidadeBase ObterRegistro()
-        {
+    {
             throw new NotImplementedException();
         }
 
