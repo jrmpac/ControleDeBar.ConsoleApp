@@ -1,0 +1,62 @@
+﻿using ControleDeBar.ConsoleApp.Compartilhado;
+using ControleDeBar.ConsoleApp.ModuloGarcom;
+using ControleDeBar.ConsoleApp.ModuloMesa;
+using ControleDeBar.ConsoleApp.ModuloProduto;
+using System.Collections;
+
+namespace ControleDeBar.ConsoleApp.ModuloPedido
+{
+    public class TelaPedido : TelaBase
+    {
+        private TelaProduto telaProduto;
+        private RepositorioProduto repositorioProduto;
+        public TelaPedido(RepositorioPedido repositorioPedido, TelaProduto telaProduto, RepositorioProduto repositorioProduto)
+        {
+            this.repositorioProduto = repositorioProduto;
+            this.telaProduto = telaProduto;
+            repositorioBase = repositorioPedido;
+
+            nomeEntidade = "Pedido";
+            sufixo = "s";            
+        }
+
+        protected override void MostrarTabela(ArrayList registros)
+        {
+            Console.WriteLine("{0, -10} | {1, -20} | {2, -20} | {3, -20}", "Id", "Produto","Quantidade", "Valor do Pedido");
+
+            Console.WriteLine("--------------------------------------------------------------------");
+
+            foreach (Pedido pedido in registros)
+            {
+                Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", pedido.id, pedido.produto.produto_nome, pedido.quantidadeDoProduto, pedido.totalParcial);
+            }
+        }
+
+        protected override EntidadeBase ObterRegistro()
+        {                       
+            telaProduto.VisualizarRegistros(false);
+            // selecionar um produto a partir do id
+
+
+            Console.Write("Digite o id do produto: ");
+            int idProduto = Convert.ToInt32(Console.ReadLine());
+            Produto produto = repositorioProduto.SelecionarPorId(idProduto);
+
+            Console.Write("Digite a quantidade do Produto: ");
+            int quantidadeDoProduto = Convert.ToInt32(Console.ReadLine());
+
+            return new Pedido(produto, quantidadeDoProduto);
+        }
+
+        private Produto ObterProduto()
+        {
+            telaProduto.VisualizarRegistros(false);
+
+            Produto produto = (Produto)telaProduto.EncontrarRegistro("Digite o id do produto: ");
+
+            Console.WriteLine();
+
+            return produto;
+        }
+    }
+}
