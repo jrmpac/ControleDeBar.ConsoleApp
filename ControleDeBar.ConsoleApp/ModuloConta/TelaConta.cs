@@ -14,9 +14,5 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         {
             throw new NotImplementedException();
         }
-
-    public class TelaConta
-    {
-
     }
 }
