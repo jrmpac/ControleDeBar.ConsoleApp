@@ -1,4 +1,5 @@
-﻿using ControleDeBar.ConsoleApp.ModuloGarcom;
+﻿using ControleDeBar.ConsoleApp.ModuloConta;
+using ControleDeBar.ConsoleApp.ModuloGarcom;
 using ControleDeBar.ConsoleApp.ModuloMesa;
 using ControleDeBar.ConsoleApp.ModuloPedido;
 using ControleDeBar.ConsoleApp.ModuloProduto;
@@ -14,11 +15,13 @@ namespace ControleDeBar.ConsoleApp
             RepositorioMesa repositorioMesa = new RepositorioMesa(new ArrayList());
             RepositorioProduto repositorioProduto = new RepositorioProduto(new ArrayList());
             RepositorioPedido repositorioPedido = new RepositorioPedido(new ArrayList());
+            RepositorioConta repositorioConta = new RepositorioConta(new ArrayList());
 
             TelaGarcom telaGarcom = new TelaGarcom(repositorioGarcom);
             TelaMesa telaMesa = new TelaMesa(repositorioMesa);
             TelaProduto telaProduto = new TelaProduto(repositorioProduto);
             TelaPedido telaPedido = new TelaPedido(repositorioPedido, telaProduto, repositorioProduto);
+            TelaConta telaConta = new TelaConta(repositorioConta, telaPedido, repositorioPedido, telaMesa);
 
             TelaPrincipal principal = new TelaPrincipal();
 
@@ -142,27 +145,27 @@ namespace ControleDeBar.ConsoleApp
                 else if (opcao == "5")
                 {
                     //tela conta
-                    string subMenu = telaPedido.ApresentarMenu();
+                    string subMenu = telaConta.ApresentarMenu();
 
                     if (subMenu == "1")
                     {
-                        telaPedido.InserirNovoRegistro();
+                        telaConta.InserirNovoRegistro();
                     }
 
                     else if (subMenu == "2")
                     {
-                        telaPedido.VisualizarRegistros(true);
+                        telaConta.VisualizarRegistros(true);
                         Console.ReadLine();
                     }
 
                     else if (subMenu == "3")
                     {
-                        telaPedido.EditarRegistro();
+                        telaConta.EditarRegistro();
                     }
 
                     else if (subMenu == "4")
                     {
-                        telaPedido.ExcluirRegistro();
+                        telaConta.ExcluirRegistro();
                     }
                 }
             }
