@@ -1,4 +1,5 @@
 ﻿using ControleDeBar.ConsoleApp.Compartilhado;
+using ControleDeBar.ConsoleApp.ModuloGarcom;
 using ControleDeBar.ConsoleApp.ModuloMesa;
 using ControleDeBar.ConsoleApp.ModuloPedido;
 using ControleDeBar.ConsoleApp.ModuloProduto;
@@ -8,43 +9,60 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 {
     public class TelaConta : TelaBase
     {
-        private RepositorioConta repositorioConta;
+        private TelaProduto telaProduto;
+        private TelaGarcom telaGarcom;
         private TelaPedido telaPedido;
-        private RepositorioPedido repositorioPedido;
         private TelaMesa telaMesa;
 
-        public TelaConta(RepositorioConta repositorioConta, TelaPedido telaPedido, RepositorioPedido repositorioPedido, TelaMesa telaMesa)
+
+        public TelaConta(RepositorioConta repositorioConta, TelaMesa telaMesa, TelaGarcom telaGarcom, TelaProduto telaProduto) : base(repositorioConta)
         {
-            this.repositorioConta = repositorioConta;
-            this.telaPedido = telaPedido;
-            this.repositorioPedido = repositorioPedido;
+            repositorioBase = repositorioConta;
+
             this.telaMesa = telaMesa;
+            this.telaGarcom = telaGarcom;
+            this.telaProduto = telaProduto;
 
             nomeEntidade = "Conta";
             sufixo = "s";
         }
 
+        public override string ApresentarMenu()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Cadastro de Contas \n");
+
+            Console.WriteLine("Digite 1 para Abrir Nova Conta");
+            Console.WriteLine("Digite 2 para Registrar Pedidos");
+            Console.WriteLine("Digite 3 para Fechar Conta");
+            Console.WriteLine("Digite 4 para Visualizar Contas Abertas");
+
+            Console.WriteLine("Digite 5 para Visualizar Faturamento do Dia");
+
+            Console.WriteLine("Digite s para Sair");
+
+            string opcao = Console.ReadLine();
+
+            return opcao;
+        }
+
         protected override void MostrarTabela(ArrayList registros)
         {
-            Console.WriteLine("{0, -10} | {1, -20} | {2, -20} | {3, -30}", "Id", "Quantidade de Pedidos", "Id da mesa", "Data", "Status");
-
-            Console.WriteLine("--------------------------------------------------------------------");
-
             foreach (Conta conta in registros)
             {
-                Console.WriteLine("{0, -10} | {1, -20} | {2, -20} | {3, -30}", conta.id, conta.pedido, conta.mesa.id, conta.data);
+                Console.Write(conta.id + ", " + conta.mesa.numeroMesa + ", " + conta.garcom.nomeGarcom);
             }
         }
 
         protected override EntidadeBase ObterRegistro()
-        {           
+        {
             Mesa mesa = ObterMesa();
 
-            Pedido pedido = ObterPedido();
+            Garcom garcom = ObterGarcom();
 
-            DateTime data = DateTime.Now.Date;
 
-            return new Conta(pedido, mesa, data);
+            return new Conta(mesa, garcom);
         }
 
         private Mesa ObterMesa()
@@ -58,15 +76,112 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             return mesa;
         }
 
-        private Pedido ObterPedido()
+        private Garcom ObterGarcom()
         {
-            telaPedido.VisualizarRegistros(false);
+            telaGarcom.VisualizarRegistros(false);
 
-            Pedido pedido = (Pedido)telaPedido.EncontrarRegistro("Digite o id do pedido: ");
+            Garcom garcom = (Garcom)telaGarcom.EncontrarRegistro("Digite o id do Garçom: ");
 
             Console.WriteLine();
 
-            return pedido;
+            return garcom;
         }
+
+        public void AbrirNovaConta()
+        {
+            base.InserirNovoRegistro();
+            //MostrarCabecalho($"Cadastro de {nomeEntidade}{sufixo}", "Inserindo um novo registro...");
+
+            //Conta conta = (Conta)ObterRegistro();
+
+            //if (TemErrosDeValidacao(conta))
+            //{
+            //    InserirNovoRegistro(); //chamada recursiva
+
+            //    return;
+            //}
+
+            //repositorioBase.Inserir(conta);
+
+            //AdicionarPedidos(conta);
+
+            //MostrarMensagem("Registro inserido com sucesso!", ConsoleColor.Green);
+        }
+
+        public void VisualizarContasAbertas()
+        {
+            VisualizarRegistros(true);
+        }
+
+        public void RegistrarPedidos()
+        {
+            VisualizarContasAbertas();
+
+            Conta contaSelecionada = (Conta)EncontrarRegistro("Digite o id da Conta: ");
+
+            Console.Write("Selecionar produtos? [s] ou [n]");
+
+            Console.WriteLine(" -> ");
+
+            string opcao = Console.ReadLine();
+
+
+            while (opcao == "s")
+            {
+                Produto produto = ObterProduto();
+
+                Console.WriteLine("Digite a quantidade: ");
+                int quantidade = Convert.ToInt32(Console.ReadLine());
+
+                contaSelecionada.RegistrarPedido(produto, quantidade);
+
+                Console.Write("Selecionar produtos? [s] ou [n]");
+
+                Console.WriteLine(" -> ");
+
+                opcao = Console.ReadLine();
+            }
+        }
+
+        private void AdicionarPedidos(Conta contaSelecionada)
+        {
+            Console.WriteLine("Selecionar produtos? [s] ou [n]");
+
+            Console.Write(" -> ");
+
+            string opcao = Console.ReadLine();
+
+            while (opcao == "s")
+            {
+                Produto produto = ObterProduto();
+
+                Console.Write("Digite a quantidade: ");
+                int quantidade = Convert.ToInt32(Console.ReadLine());
+
+                contaSelecionada.RegistrarPedido(produto, quantidade);
+
+                Console.WriteLine("Selecionar mais produtos? [s] ou [n]");
+
+                Console.Write(" -> ");
+
+                opcao = Console.ReadLine();
+            }
+        }
+
+        private Produto ObterProduto()
+        {
+            telaProduto.VisualizarRegistros(false);
+
+            Produto produto = (Produto)telaProduto.EncontrarRegistro("Digite o id do Produto: ");
+
+            Console.WriteLine();
+
+            return produto;
+        }
+
+        //public bool FecharConta()
+        //{
+        //    bool temContasEmAberto = VisualizarContasAbertas();
+        //}
     }
 }

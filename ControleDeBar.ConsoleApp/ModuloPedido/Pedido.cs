@@ -10,8 +10,14 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
         public decimal totalParcial;
         public Produto produto;
 
+        public Pedido(Produto produto, int quantidadeEscolhida)
+        {
+            this.produto = produto;
+            quantidade = quantidadeEscolhida;
+        }
+
         public Pedido(Produto produto, decimal quantidade, decimal totalParcial)
-        {           
+        {
 
             this.produto = produto;
             this.quantidade = quantidade;
@@ -21,11 +27,11 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
 
         public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
         {
-            Pedido pedidoAtualizado = (Pedido) registroAtualizado;
+            Pedido pedidoAtualizado = (Pedido)registroAtualizado;
 
-            this.produto = pedidoAtualizado.produto;
-            this.quantidade = pedidoAtualizado.quantidade;
-            this.totalParcial = pedidoAtualizado.totalParcial;
+            produto = pedidoAtualizado.produto;
+            quantidade = pedidoAtualizado.quantidade;
+            totalParcial = pedidoAtualizado.totalParcial;
         }
 
         public override ArrayList Validar()
@@ -43,6 +49,11 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
 
 
             return erros;
+        }
+
+        internal decimal CalcularTotalParcial()
+        {
+            return produto.precoProduto * quantidade;
         }
     }
 }

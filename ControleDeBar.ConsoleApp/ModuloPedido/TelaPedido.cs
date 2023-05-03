@@ -10,11 +10,11 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
     {
         private TelaProduto telaProduto;
         private RepositorioProduto repositorioProduto;
-        public TelaPedido(RepositorioPedido repositorioPedido, TelaProduto telaProduto, RepositorioProduto repositorioProduto)
+        public TelaPedido(RepositorioPedido repositorioPedido, TelaProduto telaProduto, RepositorioProduto repositorioProduto) : base(repositorioPedido)
         {
             this.repositorioProduto = repositorioProduto;
             this.telaProduto = telaProduto;
-            repositorioBase = repositorioPedido;
+            this.repositorioBase = repositorioPedido;
 
             nomeEntidade = "Pedido";
             sufixo = "s";            

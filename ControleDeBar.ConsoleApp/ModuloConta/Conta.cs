@@ -1,4 +1,5 @@
 ﻿using ControleDeBar.ConsoleApp.Compartilhado;
+using ControleDeBar.ConsoleApp.ModuloGarcom;
 using ControleDeBar.ConsoleApp.ModuloMesa;
 using ControleDeBar.ConsoleApp.ModuloPedido;
 using ControleDeBar.ConsoleApp.ModuloProduto;
@@ -8,39 +9,78 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 {
     public class Conta : EntidadeBase
     {
-        public Pedido pedido;
-        public decimal valorTotal;
         public Mesa mesa;
-        public DateTime data;
+        public ArrayList pedidos;
+        public Garcom garcom;
+        public bool estaAberta;
 
-        public Conta(Pedido pedido, Mesa mesa, DateTime data)
+        public Conta(Mesa mesa, Garcom garcom)
         {
-            this.pedido = pedido;
             this.mesa = mesa;
-            this.data = data;
+            this.garcom = garcom;
+            this.estaAberta = true;
+            this.pedidos = new ArrayList();
+
+
+            Abrir();
+
+            
+
+        }
+
+        private void Abrir()
+        {
+            estaAberta = true;
+            mesa.Ocupar();
+        }
+
+        public void RegistrarPedido(Produto produto, int quantidadeEscolhida)
+        {
+            Pedido novoPedido = new Pedido(produto, quantidadeEscolhida);
+
+            pedidos.Add(novoPedido);
+        }
+
+        public decimal CalcularValorTotal()
+        {
+            decimal total = 0;
+
+            foreach (Pedido pedido in pedidos)
+            {
+                decimal totalPedido = pedido.CalcularTotalParcial();
+
+                total += totalPedido;
+            }
+
+            return total;
         }
 
         public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
         {
             Conta contaAtualizada = (Conta)registroAtualizado;
 
-            this.pedido = contaAtualizada.pedido;
+            this.garcom = contaAtualizada.garcom;
             this.mesa = contaAtualizada.mesa;
-            this.data = contaAtualizada.data;
         }
 
         public override ArrayList Validar()
         {
             ArrayList erros = new ArrayList();
 
-            if (mesa == null)
-                erros.Add("O campo \"mesa\" é obrigatório");
+            if (garcom == null)
+                erros.Add("O campo \"Garçom\" é obrigatório");
 
-            if (data < DateTime.Now.Date)
-                erros.Add("O campo \"data\" deve ser maior que a data atual");
+            if (mesa == null)
+                erros.Add("O campo \"Mesa\" é obrigatório");
 
 
             return erros;
+        }
+
+        public void Fechar()
+        {
+            estaAberta = false;
+            mesa.Desocupar();
         }
     }
 }

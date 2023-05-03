@@ -20,5 +20,10 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         {
             return (Conta)base.SelecionarPorId(id);
         }
+
+        public void CadastrarConta()
+        {
+
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace ControleDeBar.ConsoleApp.ModuloMesa
 {
     public class TelaMesa : TelaBase
     {
-        public TelaMesa(RepositorioMesa repositorioMesa)
+        public TelaMesa(RepositorioMesa repositorioMesa) : base(repositorioMesa)
         {
             repositorioBase = repositorioMesa;
             nomeEntidade = "Mesa";
@@ -15,13 +15,11 @@ namespace ControleDeBar.ConsoleApp.ModuloMesa
 
         protected override void MostrarTabela(ArrayList registros)
         {
-            Console.WriteLine("{0, -20} | {1, -20}", "Id da mesa", "Nome do Cliente");
-
-            Console.WriteLine("--------------------------------------------------------------------");
-
             foreach (Mesa mesa in registros)
             {
-                Console.WriteLine("{0, -20} | {1, -20}", mesa.id, mesa.nomeCliente);
+                string ocupada = mesa.ocupada ? "Ocupada" : "Desocupada";
+                Console.Write(mesa.id + ", " + mesa.numeroMesa + ", " + ocupada);
+                Console.WriteLine();
             }
         }
 
@@ -30,10 +28,8 @@ namespace ControleDeBar.ConsoleApp.ModuloMesa
             Console.Write("Digite o número da mesa: ");
             string numeroMesa = Console.ReadLine();
 
-            Console.Write("Digite o responsavel pela comanda na mesa: ");
-            string nomeCliente = Console.ReadLine();
 
-            return new Mesa (numeroMesa, nomeCliente);
+            return new Mesa (numeroMesa);
         }
     }
 }

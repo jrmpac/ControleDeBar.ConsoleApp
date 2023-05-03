@@ -6,7 +6,7 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
 {
     public class TelaProduto : TelaBase
     {
-        public TelaProduto(RepositorioProduto repositorioProduto)
+        public TelaProduto(RepositorioProduto repositorioProduto) : base(repositorioProduto)
         {
             repositorioBase = repositorioProduto;
             nomeEntidade = "Produto";
@@ -30,6 +30,7 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
             string nomeProduto = Console.ReadLine();
 
             Console.Write("Digite o valor do Produto");
+            
             int precoProduto = Convert.ToInt32(Console.ReadLine());
 
             return new Produto(nomeProduto, precoProduto);

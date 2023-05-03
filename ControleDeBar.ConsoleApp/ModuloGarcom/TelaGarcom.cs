@@ -8,7 +8,7 @@ namespace ControleDeBar.ConsoleApp.ModuloGarcom
 {
     public class TelaGarcom : TelaBase
     {
-        public TelaGarcom(RepositorioGarcom repositorioGarcom)
+        public TelaGarcom(RepositorioGarcom repositorioGarcom) : base(repositorioGarcom)
         {
             repositorioBase = repositorioGarcom;
             nomeEntidade = "Garçom";
