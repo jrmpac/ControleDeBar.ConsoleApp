@@ -16,6 +16,19 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             this.listaRegistros = listaContas;
         }
 
+        public ArrayList SelecionarContasEmAberto()
+        {
+            ArrayList contasEmAberto = new ArrayList();
+
+            foreach (Conta conta in listaRegistros)
+            {
+                if(conta.estaAberta)
+                    contasEmAberto.Add(conta);
+            }
+
+            return contasEmAberto;
+        }
+
         public override Conta SelecionarPorId(int id)
         {
             return (Conta)base.SelecionarPorId(id);

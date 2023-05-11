@@ -9,6 +9,8 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 {
     public class TelaConta : TelaBase
     {
+        private RepositorioConta repositorioConta;
+
         private TelaProduto telaProduto;
         private TelaGarcom telaGarcom;
         private TelaPedido telaPedido;
@@ -17,7 +19,8 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         public TelaConta(RepositorioConta repositorioConta, TelaMesa telaMesa, TelaGarcom telaGarcom, TelaProduto telaProduto) : base(repositorioConta)
         {
-            repositorioBase = repositorioConta;
+            this.repositorioBase = repositorioConta;
+            this.repositorioConta = repositorioConta;
 
             this.telaMesa = telaMesa;
             this.telaGarcom = telaGarcom;
@@ -49,9 +52,30 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         protected override void MostrarTabela(ArrayList registros)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.WriteLine("{0, -10} | {1, -20} | {2, -22}", "Id", "Numero da Mesa", "Nome do Garçom");
+
+            Console.WriteLine("---------------------------------------------------------------------------------------");
+
+            Console.ResetColor();
+
             foreach (Conta conta in registros)
             {
-                Console.Write(conta.id + ", " + conta.mesa.numeroMesa + ", " + conta.garcom.nomeGarcom);
+                Console.WriteLine("{0, -10} | {1, -20} | {2, -22}", conta.id, conta.mesa.numeroMesa, conta.garcom.nomeGarcom);
+
+                foreach (Pedido pedido in conta.pedidos)
+                {
+                    Console.WriteLine();
+
+                    Console.WriteLine("{0, -20} | {1, -20} ", "Produto", "Quantidade");
+
+                    Console.Write("{0, -20} | {1, -20} ",  pedido.produto.produto_nome, pedido.quantidade);
+
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine("----------------------------------------------------");
             }
         }
 
@@ -89,28 +113,37 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         public void AbrirNovaConta()
         {
-            base.InserirNovoRegistro();
-            //MostrarCabecalho($"Cadastro de {nomeEntidade}{sufixo}", "Inserindo um novo registro...");
+            MostrarCabecalho($"Cadastro de {nomeEntidade}{sufixo}", "Inserindo um novo registro...");
 
-            //Conta conta = (Conta)ObterRegistro();
+            Conta conta = (Conta)ObterRegistro();
 
-            //if (TemErrosDeValidacao(conta))
-            //{
-            //    InserirNovoRegistro(); //chamada recursiva
+            if (TemErrosDeValidacao(conta))
+            {
+                InserirNovoRegistro(); //chamada recursiva
 
-            //    return;
-            //}
+                return;
+            }
 
-            //repositorioBase.Inserir(conta);
+            repositorioBase.Inserir(conta);
 
-            //AdicionarPedidos(conta);
+            AdicionarPedidos(conta);
 
-            //MostrarMensagem("Registro inserido com sucesso!", ConsoleColor.Green);
+            MostrarMensagem("Registro inserido com sucesso!", ConsoleColor.Green);
         }
 
-        public void VisualizarContasAbertas()
+        public bool VisualizarContasAbertas()
         {
-            VisualizarRegistros(true);
+            ArrayList contasEmAberto = repositorioConta.SelecionarContasEmAberto();
+
+            if (contasEmAberto.Count > 0)
+            {
+                MostrarMensagem("Nenhuma conta em aberto", ConsoleColor.DarkYellow);
+                return false;
+            }
+
+            MostrarTabela(contasEmAberto);
+
+            return contasEmAberto.Count > 0;
         }
 
         public void RegistrarPedidos()
@@ -179,9 +212,16 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             return produto;
         }
 
-        public bool FecharConta()
+        public void FecharConta()
         {
             bool temContasEmAberto = VisualizarContasAbertas();
+
+            if (temContasEmAberto == false)
+                return;
+
+            Conta contaSelecionada = (Conta)EncontrarRegistro("Digite o id da Conta: ");
+
+            contaSelecionada.Fechar();
         }
     }
 }

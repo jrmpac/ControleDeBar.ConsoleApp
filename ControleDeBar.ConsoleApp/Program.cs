@@ -130,7 +130,7 @@ namespace ControleDeBar.ConsoleApp
 
                     else if (subMenu == "3")
                     {
-                        //telaConta.FecharConta();
+                        telaConta.FecharConta();
                     }
 
                     else if (subMenu == "4")
