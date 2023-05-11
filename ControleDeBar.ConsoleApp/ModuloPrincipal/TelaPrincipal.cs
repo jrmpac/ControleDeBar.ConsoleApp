@@ -1,10 +1,12 @@
-﻿using System;
+﻿using ControleDeBar.ConsoleApp.Compartilhado;
+using ControleDeBar.ConsoleApp.ModuloMesa;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ControleDeBar.ConsoleApp
+namespace ControleDeBar.ConsoleApp.ModuloPrincipal
 {
     public class TelaPrincipal
     {
@@ -27,5 +29,7 @@ namespace ControleDeBar.ConsoleApp
 
             return opcao;
         }
+
+        
     }
 }

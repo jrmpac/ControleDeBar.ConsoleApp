@@ -2,6 +2,7 @@
 using ControleDeBar.ConsoleApp.ModuloGarcom;
 using ControleDeBar.ConsoleApp.ModuloMesa;
 using ControleDeBar.ConsoleApp.ModuloPedido;
+using ControleDeBar.ConsoleApp.ModuloPrincipal;
 using ControleDeBar.ConsoleApp.ModuloProduto;
 using System.Collections;
 
@@ -25,6 +26,7 @@ namespace ControleDeBar.ConsoleApp
 
             while (true)
             {
+
                 string opcao = principal.ApresentarMenu();
 
                 if (opcao == "s")
