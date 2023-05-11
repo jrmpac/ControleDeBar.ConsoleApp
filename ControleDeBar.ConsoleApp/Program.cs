@@ -137,7 +137,12 @@ namespace ControleDeBar.ConsoleApp
                     {
                         telaConta.VisualizarContasAbertas();
                         Console.ReadLine();
-                    }                   
+                    }         
+                    else if (subMenu == "5")
+                    {
+                        telaConta.VisualizarFaturamentoDoDia();
+                        Console.ReadLine();
+                    }
                 }
             }
         }

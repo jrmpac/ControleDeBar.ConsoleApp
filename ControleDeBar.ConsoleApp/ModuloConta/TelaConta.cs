@@ -52,31 +52,18 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         protected override void MostrarTabela(ArrayList registros)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-
-            Console.WriteLine("{0, -10} | {1, -20} | {2, -22}", "Id", "Numero da Mesa", "Nome do Garçom");
-
-            Console.WriteLine("---------------------------------------------------------------------------------------");
-
-            Console.ResetColor();
-
             foreach (Conta conta in registros)
             {
-                Console.WriteLine("{0, -10} | {1, -20} | {2, -22}", conta.id, conta.mesa.numeroMesa, conta.garcom.nomeGarcom);
-
+                Console.WriteLine("Conta: " + conta.id + ", Mesa: " + conta.mesa.numeroMesa + ", Garçom: " + conta.garcom.nomeGarcom);
+                Console.WriteLine();
                 foreach (Pedido pedido in conta.pedidos)
                 {
-                    Console.WriteLine();
-
-                    Console.WriteLine("{0, -20} | {1, -20} ", "Produto", "Quantidade");
-
-                    Console.Write("{0, -20} | {1, -20} ",  pedido.produto.produto_nome, pedido.quantidade);
-
-                    Console.WriteLine();
+                    Console.WriteLine("\tProduto: " + pedido.produto.produto_nome + ", Qtd: " + pedido.quantidade);
                 }
 
-                Console.WriteLine("----------------------------------------------------");
+                Console.WriteLine("------------------------------------------------------\n");
             }
+
         }
 
         protected override EntidadeBase ObterRegistro()
@@ -85,8 +72,11 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
             Garcom garcom = ObterGarcom();
 
+            Console.Write("Digite a data: ");
 
-            return new Conta(mesa, garcom);
+            DateTime dataAbertura = Convert.ToDateTime(Console.ReadLine());
+
+            return new Conta(mesa, garcom, dataAbertura);
         }
 
         private Mesa ObterMesa()
@@ -135,7 +125,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         {
             ArrayList contasEmAberto = repositorioConta.SelecionarContasEmAberto();
 
-            if (contasEmAberto.Count > 0)
+            if (contasEmAberto.Count == 0)
             {
                 MostrarMensagem("Nenhuma conta em aberto", ConsoleColor.DarkYellow);
                 return false;
@@ -148,7 +138,9 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         public void RegistrarPedidos()
         {
-            VisualizarContasAbertas();
+            MostrarCabecalho($"Cadastro de {nomeEntidade}{sufixo}", "Registrando pedidos...");
+
+            bool temContasEmAberto = VisualizarContasAbertas();
 
             Conta contaSelecionada = (Conta)EncontrarRegistro("Digite o id da Conta: ");
 
@@ -214,6 +206,8 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         public void FecharConta()
         {
+            MostrarCabecalho($"Cadastro de {nomeEntidade}{sufixo}", "Fechando contas... ");
+
             bool temContasEmAberto = VisualizarContasAbertas();
 
             if (temContasEmAberto == false)
@@ -222,6 +216,29 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             Conta contaSelecionada = (Conta)EncontrarRegistro("Digite o id da Conta: ");
 
             contaSelecionada.Fechar();
+        }
+
+        public void VisualizarFaturamentoDoDia()
+        {
+            MostrarCabecalho($"Cadastro de {nomeEntidade}{sufixo}", "Visualizando faturamento do dia...");
+
+            Console.WriteLine("Digite a data: ");
+
+            DateTime data = Convert.ToDateTime(Console.ReadLine());
+
+            ArrayList contasFechadasNoDia = repositorioConta.SelecionarContasFechadas(data);
+
+            FaturamentoDiario faturamentoDiario = new FaturamentoDiario(contasFechadasNoDia);
+
+            decimal totalFaturado = faturamentoDiario.CalcularTotal();
+
+            Console.WriteLine("Contas fechadas na data: " + data.ToShortDateString() );
+
+            MostrarTabela(contasFechadasNoDia);
+
+            Console.WriteLine(  );
+
+            Console.WriteLine("Total faturado: " + totalFaturado, ConsoleColor.Green);
         }
     }
 }

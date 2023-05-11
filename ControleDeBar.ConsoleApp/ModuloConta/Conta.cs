@@ -14,13 +14,15 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         public Garcom garcom;
         public bool estaAberta;
 
-        public Conta(Mesa mesa, Garcom garcom)
+        public DateTime data;
+
+        public Conta(Mesa mesa, Garcom garcom, DateTime dataAbertura)
         {
             this.mesa = mesa;
             this.garcom = garcom;
             this.estaAberta = true;
             this.pedidos = new ArrayList();
-
+            this.data = dataAbertura;
 
             Abrir();
 
