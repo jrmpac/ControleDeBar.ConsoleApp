@@ -179,9 +179,9 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             return produto;
         }
 
-        //public bool FecharConta()
-        //{
-        //    bool temContasEmAberto = VisualizarContasAbertas();
-        //}
+        public bool FecharConta()
+        {
+            bool temContasEmAberto = VisualizarContasAbertas();
+        }
     }
 }
