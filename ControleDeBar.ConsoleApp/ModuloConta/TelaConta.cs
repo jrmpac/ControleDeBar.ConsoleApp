@@ -109,7 +109,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
             if (TemErrosDeValidacao(conta))
             {
-                InserirNovoRegistro(); //chamada recursiva
+                AbrirNovaConta(); 
 
                 return;
             }
