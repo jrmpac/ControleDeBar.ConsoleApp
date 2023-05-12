@@ -24,10 +24,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             this.pedidos = new ArrayList();
             this.data = dataAbertura;
 
-            Abrir();
-
-            
-
+            Abrir();                  
         }
 
         private void Abrir()

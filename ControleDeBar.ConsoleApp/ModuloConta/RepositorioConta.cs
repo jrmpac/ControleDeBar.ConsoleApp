@@ -34,11 +34,6 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             return (Conta)base.SelecionarPorId(id);
         }
 
-        public void CadastrarConta()
-        {
-
-        }
-
         public ArrayList SelecionarContasFechadas(DateTime data)
         {
             ArrayList contasEmAberto = new ArrayList();
