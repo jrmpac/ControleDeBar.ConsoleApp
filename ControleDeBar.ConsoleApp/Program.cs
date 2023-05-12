@@ -1,7 +1,6 @@
 ﻿using ControleDeBar.ConsoleApp.ModuloConta;
 using ControleDeBar.ConsoleApp.ModuloGarcom;
 using ControleDeBar.ConsoleApp.ModuloMesa;
-using ControleDeBar.ConsoleApp.ModuloPedido;
 using ControleDeBar.ConsoleApp.ModuloPrincipal;
 using ControleDeBar.ConsoleApp.ModuloProduto;
 using System.Collections;
