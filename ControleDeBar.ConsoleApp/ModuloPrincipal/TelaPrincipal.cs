@@ -1,15 +1,57 @@
-﻿using ControleDeBar.ConsoleApp.Compartilhado;
+﻿
+
+using ControleDeBar.ConsoleApp.Compartilhado;
+using ControleDeBar.ConsoleApp.ModuloConta;
+using ControleDeBar.ConsoleApp.ModuloGarcom;
 using ControleDeBar.ConsoleApp.ModuloMesa;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ControleDeBar.ConsoleApp.ModuloProduto;
+using System.Collections;
 
 namespace ControleDeBar.ConsoleApp.ModuloPrincipal
 {
     public class TelaPrincipal
     {
+        private TelaGarcom telaGarcom;
+        private TelaMesa telaMesa;
+        private TelaProduto telaProduto;
+        private TelaConta telaConta;
+
+        public TelaPrincipal()
+        {
+            RepositorioGarcom repositorioGarcom = new RepositorioGarcom(new ArrayList());
+            RepositorioMesa repositorioMesa = new RepositorioMesa(new ArrayList());
+            RepositorioProduto repositorioProduto = new RepositorioProduto(new ArrayList());
+            RepositorioConta repositorioConta = new RepositorioConta(new ArrayList());
+
+
+            telaGarcom = new TelaGarcom(repositorioGarcom);
+            telaMesa = new TelaMesa(repositorioMesa);
+            telaProduto = new TelaProduto(repositorioProduto);
+            telaConta = new TelaConta(repositorioConta, telaMesa, telaGarcom, telaProduto);
+
+        }
+
+        public TelaBase SelecionarTela()
+        {
+            string opcao = ApresentarMenu();
+
+            if (opcao == "1")
+                return telaGarcom;
+
+            else if (opcao == "2")
+                return telaMesa;
+
+            else if (opcao == "3")
+                return telaProduto;
+
+            else if (opcao == "4")
+                return telaConta;
+
+            else
+                return null;
+
+        }
+
         public string ApresentarMenu()
         {
             Console.Clear();
@@ -21,7 +63,6 @@ namespace ControleDeBar.ConsoleApp.ModuloPrincipal
             Console.WriteLine("Digite 3 para Cadastrar Produtos");
 
             Console.WriteLine("Digite 4 para Cadastrar Conta");
-            Console.WriteLine("Digite 5 para Cadastrar Faturamento\n");
 
             Console.WriteLine("Digite s para Sair");
 
@@ -30,6 +71,6 @@ namespace ControleDeBar.ConsoleApp.ModuloPrincipal
             return opcao;
         }
 
-        
+
     }
 }

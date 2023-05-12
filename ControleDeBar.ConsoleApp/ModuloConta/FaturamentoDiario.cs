@@ -15,7 +15,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         {
             this.contasFechadas = contas;
         }
-
+ 
         public decimal CalcularTotal()
         {
             decimal total = 0;

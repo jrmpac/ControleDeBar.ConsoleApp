@@ -1,7 +1,7 @@
-﻿using ControleDeBar.ConsoleApp.ModuloConta;
+﻿using ControleDeBar.ConsoleApp.Compartilhado;
+using ControleDeBar.ConsoleApp.ModuloConta;
 using ControleDeBar.ConsoleApp.ModuloGarcom;
 using ControleDeBar.ConsoleApp.ModuloMesa;
-using ControleDeBar.ConsoleApp.ModuloPedido;
 using ControleDeBar.ConsoleApp.ModuloPrincipal;
 using ControleDeBar.ConsoleApp.ModuloProduto;
 using System.Collections;
@@ -12,140 +12,73 @@ namespace ControleDeBar.ConsoleApp
     {
         static void Main(string[] args)
         {
-            RepositorioGarcom repositorioGarcom = new RepositorioGarcom(new ArrayList());
-            RepositorioMesa repositorioMesa = new RepositorioMesa(new ArrayList());
-            RepositorioProduto repositorioProduto = new RepositorioProduto(new ArrayList());            
-            RepositorioConta repositorioConta = new RepositorioConta(new ArrayList());
-
-            TelaGarcom telaGarcom = new TelaGarcom(repositorioGarcom);
-            TelaMesa telaMesa = new TelaMesa(repositorioMesa);
-            TelaProduto telaProduto = new TelaProduto(repositorioProduto);
-            TelaConta telaConta = new TelaConta(repositorioConta, telaMesa, telaGarcom, telaProduto);
-
-            TelaPrincipal principal = new TelaPrincipal();
+            TelaPrincipal telaPrincipal = new TelaPrincipal();
 
             while (true)
             {
+                TelaBase tela = telaPrincipal.SelecionarTela();
 
-                string opcao = principal.ApresentarMenu();
-
-                if (opcao == "s")
-                {
+                if (tela == null)
                     break;
-                }
 
-                if (opcao == "1")
-                {
-                    //tela garçom
-                    string subMenu = telaGarcom.ApresentarMenu();
+                if (tela is TelaConta)
+                    GerenciarContas(tela);
+                else
+                    ExecutarCadastros(tela);
+            }
+        }
 
-                    if (subMenu == "1")
-                    {
-                        telaGarcom.InserirNovoRegistro();
-                    }
+        private static void ExecutarCadastros(TelaBase tela)
+        {
+            string subMenu = tela.ApresentarMenu();
 
-                    else if (subMenu == "2")
-                    {
-                        telaGarcom.VisualizarRegistros(true);
-                        Console.ReadLine();
-                    }
+            if (subMenu == "1")
+            {
+                tela.InserirNovoRegistro();
+            }
 
-                    else if (subMenu == "3")
-                    {
-                        telaGarcom.EditarRegistro();
-                    }
+            else if (subMenu == "2")
+            {
+                tela.VisualizarRegistros(true);
+                Console.ReadLine();
+            }
 
-                    else if (subMenu == "4")
-                    {
-                        telaGarcom.ExcluirRegistro();
-                    }
-                }
+            else if (subMenu == "3")
+            {
+                tela.EditarRegistro();
+            }
 
-                else if (opcao == "2")
-                {
-                    //tela mesa
-                    string subMenu = telaMesa.ApresentarMenu();
+            else if (subMenu == "4")
+            {
+                tela.ExcluirRegistro();
+            }
+        }
 
-                    if (subMenu == "1")
-                    {
-                        telaMesa.InserirNovoRegistro();
-                    }
+        private static void GerenciarContas(TelaBase tela)
+        {
+            string subMenu = tela.ApresentarMenu();
 
-                    else if (subMenu == "2")
-                    {
-                        telaMesa.VisualizarRegistros(true);
-                        Console.ReadLine();
-                    }
+            TelaConta telaConta = (TelaConta)tela;
 
-                    else if (subMenu == "3")
-                    {
-                        telaMesa.EditarRegistro();
-                    }
+            if (subMenu == "1")
+            {
+                telaConta.AbrirNovaConta();
+            }
 
-                    else if (subMenu == "4")
-                    {
-                        telaMesa.ExcluirRegistro();
-                    }
-                }
+            else if (subMenu == "2")
+            {
+                telaConta.RegistrarPedidos();
+            }
 
-                else if (opcao == "3")
-                {
-                    //tela produto
-                    string subMenu = telaProduto.ApresentarMenu();
+            else if (subMenu == "3")
+            {
+                telaConta.FecharConta();
+            }
 
-                    if (subMenu == "1")
-                    {
-                        telaProduto.InserirNovoRegistro();
-                    }
-
-                    else if (subMenu == "2")
-                    {
-                        telaProduto.VisualizarRegistros(true);
-                        Console.ReadLine();
-                    }
-
-                    else if (subMenu == "3")
-                    {
-                        telaProduto.EditarRegistro();
-                    }
-
-                    else if (subMenu == "4")
-                    {
-                        telaProduto.ExcluirRegistro();
-                    }
-                }
-                
-                else if (opcao == "4")
-                {
-                    //tela conta
-                    string subMenu = telaConta.ApresentarMenu();
-
-                    if (subMenu == "1")
-                    {
-                        telaConta.AbrirNovaConta();
-                    }
-
-                    else if (subMenu == "2")
-                    {
-                        telaConta.RegistrarPedidos();
-                    }
-
-                    else if (subMenu == "3")
-                    {
-                        telaConta.FecharConta();
-                    }
-
-                    else if (subMenu == "4")
-                    {
-                        telaConta.VisualizarContasAbertas();
-                        Console.ReadLine();
-                    }         
-                    else if (subMenu == "5")
-                    {
-                        telaConta.VisualizarFaturamentoDoDia();
-                        Console.ReadLine();
-                    }
-                }
+            else if (subMenu == "4")
+            {
+                telaConta.VisualizarContasAbertas();
+                Console.ReadLine();
             }
         }
     }

@@ -13,9 +13,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         private TelaProduto telaProduto;
         private TelaGarcom telaGarcom;
-        private TelaPedido telaPedido;
         private TelaMesa telaMesa;
-
 
         public TelaConta(RepositorioConta repositorioConta, TelaMesa telaMesa, TelaGarcom telaGarcom, TelaProduto telaProduto) : base(repositorioConta)
         {
