@@ -9,9 +9,9 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 {
     public class FaturamentoDiario
     {
-        private ArrayList contasFechadas;
+        private List<Conta> contasFechadas;
 
-        public FaturamentoDiario(ArrayList contas)
+        public FaturamentoDiario(List<Conta> contas)
         {
             this.contasFechadas = contas;
         }

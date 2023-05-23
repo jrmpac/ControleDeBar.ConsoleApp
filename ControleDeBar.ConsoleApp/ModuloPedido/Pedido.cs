@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace ControleDeBar.ConsoleApp.ModuloPedido
 {
-    public class Pedido : EntidadeBase
+    public class Pedido : EntidadeBase<Pedido>
     {
         public decimal quantidade;
         public decimal totalParcial;
@@ -25,10 +25,8 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
 
         }
 
-        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
+        public override void AtualizarInformacoes(Pedido pedidoAtualizado)
         {
-            Pedido pedidoAtualizado = (Pedido)registroAtualizado;
-
             produto = pedidoAtualizado.produto;
             quantidade = pedidoAtualizado.quantidade;
             totalParcial = pedidoAtualizado.totalParcial;

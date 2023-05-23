@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace ControleDeBar.ConsoleApp.ModuloConta
 {
-    public class TelaConta : TelaBase
+    public class TelaConta : TelaBase<RepositorioConta, Conta>
     {
         private RepositorioConta repositorioConta;
 
@@ -48,7 +48,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             return opcao;
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Conta> registros)
         {
             foreach (Conta conta in registros)
             {
@@ -64,7 +64,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         }
 
-        protected override EntidadeBase ObterRegistro()
+        protected override Conta ObterRegistro()
         {
             Mesa mesa = ObterMesa();
 
@@ -81,7 +81,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         {
             telaMesa.VisualizarRegistros(false);
 
-            Mesa mesa = (Mesa)telaMesa.EncontrarRegistro("Digite o id da mesa: ");
+            Mesa mesa = telaMesa.EncontrarRegistro("Digite o id da mesa: ");
 
             Console.WriteLine();
 
@@ -92,7 +92,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         {
             telaGarcom.VisualizarRegistros(false);
 
-            Garcom garcom = (Garcom)telaGarcom.EncontrarRegistro("Digite o id do Garçom: ");
+            Garcom garcom = telaGarcom.EncontrarRegistro("Digite o id do Garçom: ");
 
             Console.WriteLine();
 
@@ -103,7 +103,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         {
             MostrarCabecalho($"Cadastro de {nomeEntidade}{sufixo}", "Inserindo um novo registro...");
 
-            Conta conta = (Conta)ObterRegistro();
+            Conta conta = ObterRegistro();
 
             if (TemErrosDeValidacao(conta))
             {
@@ -121,7 +121,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         public bool VisualizarContasAbertas()
         {
-            ArrayList contasEmAberto = repositorioConta.SelecionarContasEmAberto();
+            List<Conta> contasEmAberto = repositorioConta.SelecionarContasEmAberto();
 
             if (contasEmAberto.Count == 0)
             {
@@ -195,7 +195,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         {
             telaProduto.VisualizarRegistros(false);
 
-            Produto produto = (Produto)telaProduto.EncontrarRegistro("Digite o id do Produto: ");
+            Produto produto = telaProduto.EncontrarRegistro("Digite o id do Produto: ");
 
             Console.WriteLine();
 
@@ -211,7 +211,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             if (temContasEmAberto == false)
                 return;
 
-            Conta contaSelecionada = (Conta)EncontrarRegistro("Digite o id da Conta: ");
+            Conta contaSelecionada = EncontrarRegistro("Digite o id da Conta: ");
 
             contaSelecionada.Fechar();
         }
@@ -224,7 +224,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
             DateTime data = Convert.ToDateTime(Console.ReadLine());
 
-            ArrayList contasFechadasNoDia = repositorioConta.SelecionarContasFechadas(data);
+            List<Conta> contasFechadasNoDia = repositorioConta.SelecionarContasFechadas(data);
 
             FaturamentoDiario faturamentoDiario = new FaturamentoDiario(contasFechadasNoDia);
 

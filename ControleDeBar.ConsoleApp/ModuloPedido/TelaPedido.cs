@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace ControleDeBar.ConsoleApp.ModuloPedido
 {
-    public class TelaPedido : TelaBase
+    public class TelaPedido : TelaBase<RepositorioPedido, Pedido>
     {
         private TelaProduto telaProduto;
         private RepositorioProduto repositorioProduto;
@@ -20,7 +20,7 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
             sufixo = "s";            
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Pedido> registros)
         {
             Console.WriteLine("{0, -10} | {1, -20} | {2, -20} | {3, -30}", "Id", "Produto","Quantidade", "Valor do Pedido");
 
@@ -32,7 +32,7 @@ namespace ControleDeBar.ConsoleApp.ModuloPedido
             }
         }
 
-        protected override EntidadeBase ObterRegistro()
+        protected override Pedido ObterRegistro()
         {                       
             telaProduto.VisualizarRegistros(false);
             // selecionar um produto a partir do id

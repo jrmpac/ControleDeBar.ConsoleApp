@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace ControleDeBar.ConsoleApp.ModuloProduto
 {
-    public class TelaProduto : TelaBase
+    public class TelaProduto : TelaBase<RepositorioProduto, Produto>
     {
         public TelaProduto(RepositorioProduto repositorioProduto) : base(repositorioProduto)
         {
@@ -12,7 +12,7 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
             nomeEntidade = "Produto";
             sufixo = "s";
         }
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Produto> registros)
         {
             Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", "Id", "Nome do Produto", "Preço do Produto");
 
@@ -24,7 +24,7 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
             }
         }
 
-        protected override EntidadeBase ObterRegistro()
+        protected override Produto ObterRegistro()
         {
             Console.Write("Digite o nome do Produto: ");
             string nomeProduto = Console.ReadLine();

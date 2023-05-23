@@ -3,16 +3,16 @@ using System.Collections;
 
 namespace ControleDeBar.ConsoleApp.ModuloConta
 {
-    public class RepositorioConta : RepositorioBase
+    public class RepositorioConta : RepositorioBase<Conta> 
     {
-        public RepositorioConta(ArrayList listaContas)
+        public RepositorioConta(List<Conta> listaContas)
         {
             this.listaRegistros = listaContas;
         }
 
-        public ArrayList SelecionarContasEmAberto()
+        public List<Conta> SelecionarContasEmAberto()
         {
-            ArrayList contasEmAberto = new ArrayList();
+            List<Conta> contasEmAberto = new List<Conta>();
 
             foreach (Conta conta in listaRegistros)
             {
@@ -23,14 +23,9 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             return contasEmAberto;
         }
 
-        public override Conta SelecionarPorId(int id)
+        public List<Conta> SelecionarContasFechadas(DateTime data)
         {
-            return (Conta)base.SelecionarPorId(id);
-        }
-
-        public ArrayList SelecionarContasFechadas(DateTime data)
-        {
-            ArrayList contasEmAberto = new ArrayList();
+            List<Conta> contasEmAberto = new List<Conta>();
 
             foreach (Conta conta in listaRegistros)
             {

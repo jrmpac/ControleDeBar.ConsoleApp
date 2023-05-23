@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace ControleDeBar.ConsoleApp.ModuloConta
 {
-    public class Conta : EntidadeBase
+    public class Conta : EntidadeBase<Conta>
     {
         public Mesa mesa;
         public ArrayList pedidos;
@@ -54,12 +54,10 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             return total;
         }
 
-        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
-        {
-            Conta contaAtualizada = (Conta)registroAtualizado;
-
-            this.garcom = contaAtualizada.garcom;
-            this.mesa = contaAtualizada.mesa;
+        public override void AtualizarInformacoes(Conta contaAtualizada)
+        {            
+            garcom = contaAtualizada.garcom;
+            mesa = contaAtualizada.mesa;
         }
 
         public override ArrayList Validar()

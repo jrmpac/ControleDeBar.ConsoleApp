@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace ControleDeBar.ConsoleApp.ModuloGarcom
 {
-    public class TelaGarcom : TelaBase
+    public class TelaGarcom : TelaBase<RepositorioGarcom, Garcom>
     {
         public TelaGarcom(RepositorioGarcom repositorioGarcom) : base(repositorioGarcom)
         {
@@ -14,7 +14,7 @@ namespace ControleDeBar.ConsoleApp.ModuloGarcom
             nomeEntidade = "Garçom";
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Garcom> registros)
         {
             Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", "Id", "Nome do Garçom", "CPF do Garçom");
 
@@ -26,7 +26,7 @@ namespace ControleDeBar.ConsoleApp.ModuloGarcom
             }
         }
 
-        protected override EntidadeBase ObterRegistro()
+        protected override Garcom ObterRegistro()
         {
             Console.Write("Digite o nome do Garçom: ");
             string nomeGarcom = Console.ReadLine();

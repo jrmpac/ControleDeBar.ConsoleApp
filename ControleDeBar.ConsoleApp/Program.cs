@@ -16,19 +16,23 @@ namespace ControleDeBar.ConsoleApp
 
             while (true)
             {
-                TelaBase tela = telaPrincipal.SelecionarTela();
+                ITelaCadastravel tela = telaPrincipal.SelecionarTela();
 
                 if (tela == null)
                     break;
 
                 if (tela is TelaConta)
-                    GerenciarContas(tela);
+                {
+                    //as
+                    TelaConta telaConta = (TelaConta) tela; //  TelaConta telaConta = tela as TelaConta;
+                    GerenciarContas(telaConta);
+                }
                 else
                     ExecutarCadastros(tela);
             }
         }
 
-        private static void ExecutarCadastros(TelaBase tela)
+        private static void ExecutarCadastros(ITelaCadastravel tela)
         {
             string subMenu = tela.ApresentarMenu();
 
@@ -54,11 +58,9 @@ namespace ControleDeBar.ConsoleApp
             }
         }
 
-        private static void GerenciarContas(TelaBase tela)
+        private static void GerenciarContas(TelaConta telaConta)
         {
-            string subMenu = tela.ApresentarMenu();
-
-            TelaConta telaConta = (TelaConta)tela;
+            string subMenu = telaConta.ApresentarMenu();
 
             if (subMenu == "1")
             {

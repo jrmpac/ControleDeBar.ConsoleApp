@@ -18,10 +18,10 @@ namespace ControleDeBar.ConsoleApp.ModuloPrincipal
 
         public TelaPrincipal()
         {
-            RepositorioGarcom repositorioGarcom = new RepositorioGarcom(new ArrayList());
-            RepositorioMesa repositorioMesa = new RepositorioMesa(new ArrayList());
-            RepositorioProduto repositorioProduto = new RepositorioProduto(new ArrayList());
-            RepositorioConta repositorioConta = new RepositorioConta(new ArrayList());
+            RepositorioGarcom repositorioGarcom = new RepositorioGarcom(new List<Garcom>());
+            RepositorioMesa repositorioMesa = new RepositorioMesa(new List<Mesa>());
+            RepositorioProduto repositorioProduto = new RepositorioProduto(new List<Produto>());
+            RepositorioConta repositorioConta = new RepositorioConta(new List<Conta>());
 
 
             telaGarcom = new TelaGarcom(repositorioGarcom);
@@ -31,7 +31,7 @@ namespace ControleDeBar.ConsoleApp.ModuloPrincipal
 
         }
 
-        public TelaBase SelecionarTela()
+        public ITelaCadastravel SelecionarTela() 
         {
             string opcao = ApresentarMenu();
 

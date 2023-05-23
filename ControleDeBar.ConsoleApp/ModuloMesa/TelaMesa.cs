@@ -1,10 +1,8 @@
 ﻿using ControleDeBar.ConsoleApp.Compartilhado;
-using ControleDeBar.ConsoleApp.ModuloGarcom;
-using System.Collections;
 
 namespace ControleDeBar.ConsoleApp.ModuloMesa
 {
-    public class TelaMesa : TelaBase
+    public class TelaMesa : TelaBase<RepositorioMesa, Mesa>
     {
         public TelaMesa(RepositorioMesa repositorioMesa) : base(repositorioMesa)
         {
@@ -13,7 +11,7 @@ namespace ControleDeBar.ConsoleApp.ModuloMesa
             sufixo = "s";
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Mesa> registros)
         {
             foreach (Mesa mesa in registros)
             {
@@ -23,7 +21,7 @@ namespace ControleDeBar.ConsoleApp.ModuloMesa
             }
         }
 
-        protected override EntidadeBase ObterRegistro()
+        protected override Mesa ObterRegistro()
         {
             Console.Write("Digite o número da mesa: ");
             string numeroMesa = Console.ReadLine();

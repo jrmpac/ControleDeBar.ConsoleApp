@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace ControleDeBar.ConsoleApp.ModuloProduto
 {
-    public class Produto : EntidadeBase
+    public class Produto : EntidadeBase<Produto>
     {
         public string produto_nome;
         public decimal precoProduto;
@@ -16,12 +16,10 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
             this.precoProduto = precoProduto;
         }
 
-        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
-        {
-            Produto produtoAtualizado = (Produto)registroAtualizado;
-
-            this.produto_nome = produtoAtualizado.produto_nome;
-            this.precoProduto = produtoAtualizado.precoProduto;
+        public override void AtualizarInformacoes(Produto produtoAtualizado)
+        {            
+            produto_nome = produtoAtualizado.produto_nome;
+            precoProduto = produtoAtualizado.precoProduto;
         }
 
         public override ArrayList Validar()

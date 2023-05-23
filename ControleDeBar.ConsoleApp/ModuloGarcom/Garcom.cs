@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloGarcom
 {
-    public class Garcom : EntidadeBase
+    public class Garcom : EntidadeBase<Garcom>
     {
         public string nomeGarcom;
         public string cpfGarcom;
@@ -20,12 +20,10 @@ namespace ControleDeBar.ConsoleApp.ModuloGarcom
             this.cpfGarcom = cpfGarcom;
         }
 
-        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
+        public override void AtualizarInformacoes(Garcom garcomAtualizado)
         {
-            Garcom GarcomAtualizado = (Garcom)registroAtualizado;
-
-            this.nomeGarcom = GarcomAtualizado.nomeGarcom;
-            this.cpfGarcom = GarcomAtualizado.cpfGarcom;
+            nomeGarcom = garcomAtualizado.nomeGarcom;
+            cpfGarcom = garcomAtualizado.cpfGarcom;
         }
 
         public override ArrayList Validar()
